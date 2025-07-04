@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fine Firearm Powder Calculator</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
+    input { margin: 0.5rem 0; padding: 0.3rem; width: 80px; }
+    button { padding: 0.5rem; margin-top: 1rem; }
+    .output { margin-top: 2rem; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Fine Firearm Powder Calculator</h1>
+  <label>Ground Sulfurous Ash: <input type="number" id="ash" value="10"></label><br>
+  <label>Coal: <input type="number" id="coal" value="10"></label><br>
+  <label>Saltpeter: <input type="number" id="saltpeter" value="10"></label><br>
+  <button onclick="calculate()">Calculate</button>
+
+  <div class="output" id="output"></div>
+
+  <script>
+    function calculate() {
+      const ash = parseInt(document.getElementById("ash").value) || 0;
+      const coal = parseInt(document.getElementById("coal").value) || 0;
+      const saltpeter = parseInt(document.getElementById("saltpeter").value) || 0;
+
+      const groundCoal = coal * 5;
+      const blackPowderBatches = Math.min(ash, groundCoal, saltpeter);
+
+      const totalBlackPowder = blackPowderBatches * 5;
+      const coarsePowder = totalBlackPowder * 2; // because 5 → 10
+      const finePowder = coarsePowder * 2; // 1 → 2
+
+      const output = `
+You can make ${finePowder} Fine Firearm Powder.
+
+Step-by-step instructions:
+1. Grind ${blackPowderBatches} Sulfurous Ash → ${blackPowderBatches} Explosive Powder.
+2. Grind ${blackPowderBatches} Ground Coal (requires ${(blackPowderBatches / 5).toFixed(2)} Coal).
+3. Use ${blackPowderBatches} Saltpeter.
+4. Combine to create ${totalBlackPowder} Black Powder.
+5. Mill to get ${coarsePowder} Coarse Powder.
+6. Mill again for ${finePowder} Fine Powder.
+      `;
+
+      document.getElementById("output").textContent = output;
+    }
+  </script>
+</body>
+</html>
