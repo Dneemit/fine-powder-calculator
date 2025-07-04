@@ -12,7 +12,7 @@
 </head>
 <body>
   <h1>Fine Firearm Powder Calculator</h1>
-  <label>Ground Sulfurous Ash: <input type="number" id="ash" value="10"></label><br>
+  <label>Raw Sulfurous Ash: <input type="number" id="ash" value="10"></label><br>
   <label>Coal: <input type="number" id="coal" value="10"></label><br>
   <label>Saltpeter: <input type="number" id="saltpeter" value="10"></label><br>
   <button onclick="calculate()">Calculate</button>
@@ -25,19 +25,20 @@
       const coal = parseInt(document.getElementById("coal").value) || 0;
       const saltpeter = parseInt(document.getElementById("saltpeter").value) || 0;
 
-      const groundCoal = coal * 5;
-      const blackPowderBatches = Math.min(ash, groundCoal, saltpeter);
+      const explosivePowder = ash; // 1:1
+      const groundCoal = coal * 5; // 1 coal → 5 ground coal
+      const blackPowderBatches = Math.min(explosivePowder, groundCoal, saltpeter);
 
       const totalBlackPowder = blackPowderBatches * 5;
-      const coarsePowder = totalBlackPowder * 2; // because 5 → 10
+      const coarsePowder = totalBlackPowder * 2; // 5 → 10
       const finePowder = coarsePowder * 2; // 1 → 2
 
       const output = `
 You can make ${finePowder} Fine Firearm Powder.
 
 Step-by-step instructions:
-1. Grind ${blackPowderBatches} Sulfurous Ash → ${blackPowderBatches} Explosive Powder.
-2. Grind ${blackPowderBatches} Ground Coal (requires ${(blackPowderBatches / 5).toFixed(2)} Coal).
+1. Grind ${blackPowderBatches} Sulfurous Ash into ${blackPowderBatches} Explosive Powder.
+2. Grind ${Math.ceil(blackPowderBatches / 5)} Coal into ${blackPowderBatches} Ground Coal.
 3. Use ${blackPowderBatches} Saltpeter.
 4. Combine to create ${totalBlackPowder} Black Powder.
 5. Mill to get ${coarsePowder} Coarse Powder.
